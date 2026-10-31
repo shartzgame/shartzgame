@@ -28,6 +28,10 @@ details summary::-webkit-details-marker{display:none}
 .nav-links{order:3;flex-basis:100%;margin-left:0;justify-content:space-between;gap:8px;font-size:13px}
 }
 @media (max-width:360px){.nav-links{font-size:12px}}
+[hidden]{display:none!important}
+.how-tabs{display:flex;gap:12px;margin:0 0 40px}
+.how-tab{font:inherit;font-weight:700;font-size:18px;padding:12px 22px;border:2px solid #000000;border-radius:999px;background:#FFFFFF;color:#000000;cursor:pointer}
+.how-tab[aria-selected="true"]{background:#791585;color:#FFFFFF}
 </style>
 </head>
 <body>
@@ -74,9 +78,15 @@ details summary::-webkit-details-marker{display:none}
 
   <section id="how" style="max-width: 1200px; margin: 0 auto; padding: 112px 24px">
     <h2 style="margin: 0 0 16px; font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: -0.03em; font-size: clamp(40px, 5vw, 64px); line-height: 1">How to play</h2>
-    <p style="margin: 0 0 56px; font-size: 20px; max-width: 600px; line-height: 1.5">Playing is as easy as 1-2-3. You'll be in the game before anyone finishes reading the box.</p>
-    <video src="images/how-to-play.mp4" poster="images/how-to-play-poster.jpg" autoplay muted loop playsinline aria-label="Animation: a Shart token is tucked between the cheeks of a pair of jeans, then dropped into the toilet target" style="display: block; width: 100%; max-width: 360px; aspect-ratio: 516 / 704; margin: 0 auto 56px; background: #FFFFFF; object-fit: cover"></video>
-    <div style="display: flex; flex-wrap: wrap; gap: 28px">
+    <p style="margin: 0 0 32px; font-size: 20px; max-width: 600px; line-height: 1.5">Playing is as easy as 1-2-3. You'll be in the game before anyone finishes reading the box.</p>
+    <div class="how-tabs" role="tablist" aria-label="How to play">
+      <button type="button" class="how-tab" role="tab" id="how-tab-steps" aria-controls="how-steps" aria-selected="true">Step by step</button>
+      <button type="button" class="how-tab" role="tab" id="how-tab-video" aria-controls="how-video" aria-selected="false" tabindex="-1">Watch it</button>
+    </div>
+    <div id="how-video" role="tabpanel" aria-labelledby="how-tab-video" hidden>
+      <video src="images/how-to-play.mp4" poster="images/how-to-play-poster.jpg" muted loop playsinline preload="none" aria-label="Animation: a Shart token is tucked between the cheeks of a pair of jeans, then dropped into the toilet target" style="display: block; width: 100%; max-width: 360px; aspect-ratio: 516 / 704; margin: 0 auto; background: #FFFFFF; object-fit: cover"></video>
+    </div>
+    <div id="how-steps" role="tabpanel" aria-labelledby="how-tab-steps" style="display: flex; flex-wrap: wrap; gap: 28px">
       <div style="flex: 1 1 300px; min-width: 0; background: #FFFFFF; border: 2px solid #000000; border-radius: 24px; padding: 36px; display: flex; flex-direction: column; gap: 16px">
         <img src="images/step-load.png" alt="A Shart token clenched between the cheeks of a pair of jeans" style="width: 100%; height: 260px; object-fit: contain; display: block">
         <span style="font-family: 'Inter', sans-serif; font-weight: 900; font-size: 56px; line-height: 1; color: #791585">1</span>
@@ -209,5 +219,30 @@ details summary::-webkit-details-marker{display:none}
   </footer>
 
 </div>
+<script>
+// How to play: switch between the step cards and the video
+(function () {
+  var tabs = document.querySelectorAll('.how-tab');
+  var video = document.querySelector('#how-video video');
+  function select(tab) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (tab.id === 'how-tab-video') video.play().catch(function () {}); else video.pause();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(t); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      select(next);
+      next.focus();
+    });
+  });
+})();
+</script>
 </body>
 </html>
