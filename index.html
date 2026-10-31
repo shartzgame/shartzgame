@@ -18,21 +18,30 @@ html{scroll-behavior:smooth}
 a{color:#000000}a:hover{color:#791585}
 details summary{cursor:pointer;list-style:none}
 details summary::-webkit-details-marker{display:none}
+.nav{max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:28px;font-weight:500;font-size:16px}
+.nav-links a{text-decoration:none;white-space:nowrap}
+@media (max-width:640px){
+.nav{padding:12px 16px;justify-content:space-between;gap:12px}
+.nav-logo img{height:44px!important}
+.nav-links{order:3;flex-basis:100%;margin-left:0;justify-content:space-between;gap:8px;font-size:13px}
+}
+@media (max-width:360px){.nav-links{font-size:12px}}
 </style>
 </head>
 <body>
 <div style="font-family: 'DM Sans', system-ui, sans-serif; color: #000000; background: #FFFFFF; min-height: 100vh">
 
   <header style="background: #FFFFFF; border-bottom: 2px solid #000000">
-    <nav style="max-width: 1200px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-      <a href="#top" style="display: flex; align-items: center; text-decoration: none"><img src="images/shartz-logo.png" alt="Shartz" style="height: 56px; width: auto; display: block"></a>
-      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 28px; font-weight: 500; font-size: 16px">
-        <a href="#how" style="text-decoration: none">How to play</a>
-        <a href="#modes" style="text-decoration: none">Ways to play</a>
-        <a href="#box" style="text-decoration: none">What's in the box</a>
-        <a href="#faq" style="text-decoration: none">FAQ</a>
-        <a href="https://www.amazon.com/dp/B0G15MXWMK" style="text-decoration: none; background: #791585; color: #FFFFFF; font-weight: 700; padding: 12px 22px; border-radius: 999px; border: 2px solid #000000; min-height: 20px">Buy on Amazon</a>
+    <nav class="nav">
+      <a href="#top" class="nav-logo" style="display: flex; align-items: center; text-decoration: none"><img src="images/shartz-logo.png" alt="Shartz" style="height: 56px; width: auto; display: block"></a>
+      <div class="nav-links">
+        <a href="#how">How to play</a>
+        <a href="#modes">Ways to play</a>
+        <a href="#box">What's in the box</a>
+        <a href="#faq">FAQ</a>
       </div>
+      <a href="https://www.amazon.com/dp/B0G15MXWMK" style="text-decoration: none; background: #791585; color: #FFFFFF; font-weight: 700; padding: 12px 22px; border-radius: 999px; border: 2px solid #000000; white-space: nowrap">Buy on Amazon</a>
     </nav>
   </header>
 
